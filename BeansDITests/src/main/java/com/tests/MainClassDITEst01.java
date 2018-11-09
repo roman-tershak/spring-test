@@ -5,6 +5,8 @@ import com.tests.beans.IBean01;
 import com.tests.beans.Prototype01A;
 import com.tests.beans.Singletone01;
 import com.tests.beans.annotations.BeanAnB01;
+import com.tests.beans.annotations.aop.CompoB;
+import com.tests.beans.annotations.spel.BeanB;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -50,10 +52,24 @@ public class MainClassDITEst01 {
         singletonInterface.doSomething();
     }
 
-    public static void main(String[] args) {
+    public static void main4(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context.xml");
 
         BeanAnB01 beanAnB01 = context.getBean("beanAnB01", BeanAnB01.class);
         beanAnB01.doSomething();
+    }
+
+    public static void main5(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context.xml");
+
+        CompoB compoB = context.getBean("compoB", CompoB.class);
+        compoB.doSomething();
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context-spel.xml");
+
+        BeanB beanB = context.getBean(BeanB.class);
+        beanB.doSomething();
     }
 }
