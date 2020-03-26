@@ -5,10 +5,13 @@ import com.tests.beans.IBean01;
 import com.tests.beans.Prototype01A;
 import com.tests.beans.Singletone01;
 import com.tests.beans.annotations.BeanAnB01;
+import com.tests.beans.annotations.annot_conf_vs_comp_scan.Bean_ACvsCS_B;
 import com.tests.beans.annotations.aop.CompoB;
 import com.tests.beans.annotations.spel.BeanB;
+import com.tests.beans.init.BeanPrototype;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.StopWatch;
 
 public class MainClassDITEst01 {
 
@@ -66,10 +69,32 @@ public class MainClassDITEst01 {
         compoB.doSomething();
     }
 
-    public static void main(String[] args) {
+    public static void main6(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context-spel.xml");
 
         BeanB beanB = context.getBean(BeanB.class);
         beanB.doSomething();
+    }
+
+    public static void main7(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context-annot-conf-vs-comp-scan.xml");
+
+        Bean_ACvsCS_B beanB = context.getBean(Bean_ACvsCS_B.class);
+        beanB.doSomething();
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/application-context-creation-test.xml");
+
+        ((ClassPathXmlApplicationContext) context).registerShutdownHook();
+
+        BeanPrototype beanProto;
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        for (int i = 0; i < 1000000; i++) {
+            beanProto = context.getBean("beanProto", BeanPrototype.class);
+        }
+        stopWatch.stop();
+        System.out.println("...it took " + stopWatch.getTotalTimeMillis());
     }
 }

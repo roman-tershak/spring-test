@@ -1,12 +1,11 @@
-package com.tests.beans.annotations.spel;
+package com.tests.beans.annotations.annot_conf_vs_comp_scan;
 
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
-public class BeanA {
-
+public class Bean_ACvsCS_A {
     private String propStr;
 
     private Integer propInt;
@@ -34,5 +33,6 @@ public class BeanA {
     private void postConstruct() {
         propStr = "String from postConstruct";
         propInt = 7;
+        System.out.println("from A postConstruct");
     }
 }
